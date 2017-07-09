@@ -87,8 +87,10 @@ readerStream2.on('readable', () => {
     }
 })*/
 
-let r = fs.createReadStream('/tmp/world.txt');
+/*let r = fs.createReadStream('/tmp/world.txt');
 let z = zlib.createGzip(); //既是writeStream, 也是readStream
 let w = fs.createWriteStream('/tmp/world.txt.gz')
-r.pipe(z).pipe(w);
+r.pipe(z).pipe(w);*/
+
+
 
