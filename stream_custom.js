@@ -11,6 +11,7 @@ ReadStream.prototype._read = function() {
     this.push('I ');
     this.push('love ');
     this.push('you\n');
+    this.push(null); //告诉可读流结束,否则会持续读数据
 }
 
 const WriteStream = function() {
@@ -19,27 +20,27 @@ const WriteStream = function() {
 util.inherits(WriteStream, stream.Writable);
 //重写_stream.Writable中的_write方法
 WriteStream.prototype._write = function(chunk, encode, cb) {
-    console.log(chunk);
+    console.log(chunk.toString());
     cb()
 }
 
-const Transfrom = function() {
+const TransformStream = function() {
     stream.Transform.call(this);
 }
-util.inherits(Transfrom, stream.Transform);
+util.inherits(TransfromStream, stream.Transform);
 
-Transfrom.prototype._transform = function(chunk, encode, cb) {
+TransformStream.prototype._transform = function(chunk, encode, cb) {
     this.push(chunk);
     cb();
 }
 
-Transfrom.prototype._flush = function(cb) {
+TransformStream.prototype._flush = function(cb) {
     this.push('add transfrom information!');
     cb();
 }
 
 const rs = new ReadStream();
 const ws = new WriteStream();
-const ts = new Transfrom();
+const ts = new TransformStream();
 
-rs.pipe(ts).pipe(ws)
+rs.pipe(ts).pipe(ws);
